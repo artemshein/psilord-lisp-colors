@@ -358,9 +358,9 @@
 
 (defun ansi-lisp-highlight-keyword (class)
   "Make a single font-lock-keyword applying CLASS face to each of the symbols in CLASS variable."
-  (list (regexp-opt
+  (list (concat "\\<" (regexp-opt
          (mapcar #'symbol-name (eval class))
-         'symbols)
+         'symbols) "\\>")
         'quote
         class))
 
@@ -378,9 +378,11 @@
 
      ;; Lisp Numbers, simple ones, just integers
      '("\\_<[+-]?[0-9]+\\_>" . 'ansi-lisp-number)
+     
+     '("[`,@#']" . 'ansi-lisp-boolean)
 
      ;; I'm a psycho and want my parentheis color to be controlled.
-     '("[()]" . 'ansi-lisp-parenthesis)
+     ;;'("[()]" . 'ansi-lisp-parenthesis)
 
      ;; These are often important to see, but I don't know how to
      ;; highlight the matching parenthesis with it
